@@ -1,7 +1,7 @@
 <template>
-    <el-container>
+    <v-container>
             {{accessmsg}}
-    </el-container>
+    </v-container>
 </template>
 
 <script>
