@@ -228,7 +228,7 @@ export default {
                     // location.reload();
                     // window.console.log(res.data.results)
                     this.dialog = false
-                    return res.data.results
+                    return res.data
             }catch(e) {
                 window.console.log(e);
             }

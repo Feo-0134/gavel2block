@@ -215,6 +215,7 @@ export default {
                 try {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/engineer_title/`)
                     this.engineer_title = res.data.results[this.engineer_info.Title - 1].FullName
+                    // potential bug here
                     return res.data.results
                 }catch(e) {
                     window.console.log(e)
@@ -324,9 +325,8 @@ export default {
                             Stage4TryTimes: -1
                         },
                     );
-                    window.console.log(res.data.results)
                     const path = 'http://localhost:8000/escBackend/engineer/' + that.engineer_info.id + '/'
-                    const processID = res.data.results.id
+                    const processID = res.data.id
                     const res1 = await this.$http.put( path,
                         {
                             "Alias": that.engineer_info.Alias,
@@ -338,7 +338,7 @@ export default {
                         }
                     );
                     // location.reload();
-                    const newPath = '/processDetail/' + res.data.results.id
+                    const newPath = '/processDetail/' + res.data.id
                     setTimeout(() => {
                         this.$router.push(newPath)
                     }, 2000);

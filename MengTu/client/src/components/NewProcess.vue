@@ -105,11 +105,11 @@ export default {
                 },
             );
             // location.reload();
-            window.console.log(res.data.results)
+            window.console.log(res.data)
             setTimeout(() => {
               this.$router.push({name: 'Dashboard'})
             }, 3000);
-            return res.data.results
+            return res.data
           }
         }catch(e) {
           window.console.log(e);

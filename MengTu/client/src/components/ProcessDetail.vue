@@ -211,12 +211,12 @@ export default {
                             Submited: false
                         }
                     );
-                    window.console.log(res.data.results)
+                    window.console.log(res.data)
                     const res1 = await this.$http.post(
                         'http://localhost:8000/escBackend/process_comment/',
                         {
                             Process: that.process_id,
-                            Comment: res.data.results.id
+                            Comment: res.data.id
                         }
                     );
                     // location.reload();
