@@ -172,8 +172,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/stage_kind/`)
-                    this.stage_cnt = res.data.length
-                    return res.data
+                    this.stage_cnt = res.data.results.length
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -183,7 +183,7 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
-                    return res.data
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -194,7 +194,7 @@ export default {
                 try {
                     const that = this
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${that.process_object.ProcessOwner}`)
-                    return res.data
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -226,9 +226,9 @@ export default {
                         },
                     );
                     // location.reload();
-                    // window.console.log(res.data)
+                    // window.console.log(res.data.results)
                     this.dialog = false
-                    return res.data
+                    return res.data.results
             }catch(e) {
                 window.console.log(e);
             }

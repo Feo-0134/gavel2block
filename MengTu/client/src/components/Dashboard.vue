@@ -90,8 +90,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/`)
-                    this.engineer_cnt = res.data.length
-                    return res.data
+                    this.engineer_cnt = res.data.results.length
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -101,8 +101,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/`)
-                    this.process_cnt = res.data.length
-                    return res.data
+                    this.process_cnt = res.data.results.length
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -112,8 +112,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/`)
-                    this.comment_cnt = res.data.length
-                    return res.data
+                    this.comment_cnt = res.data.results.length
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -123,8 +123,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
-                    this.reviewer_cnt = res.data.length
-                    return res.data
+                    this.reviewer_cnt = res.data.results.length
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }

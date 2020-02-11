@@ -214,8 +214,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/engineer_title/`)
-                    this.engineer_title = res.data[this.engineer_info.Title - 1].FullName
-                    return res.data
+                    this.engineer_title = res.data.results[this.engineer_info.Title - 1].FullName
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -225,8 +225,8 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/process_kind/`)
-                    this.process_kind = res.data[this.engineer_info.Title - 1].FullName
-                    return res.data
+                    this.process_kind = res.data.results[this.engineer_info.Title - 1].FullName
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -238,8 +238,8 @@ export default {
                     const res = await this.$http.get(`http://localhost:8000/escBackend/stage_kind/`)
                     this.currentStage = this.engineer_info.EngineerLatestStage
                     this.maxCurrentStage = this.engineer_info.EngineerLatestStage
-                    this.stage_kind = res.data[this.engineer_info.EngineerLatestStage - 1].FullName
-                    return res.data
+                    this.stage_kind = res.data.results[this.engineer_info.EngineerLatestStage - 1].FullName
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -251,7 +251,7 @@ export default {
                 try {
                     const path = 'http://localhost:8000/escBackend/process/' + this.engineer_info.EngineerLatestProcess + '/'
                     const res = await this.$http.get(path)
-                    return res.data
+                    return res.data.results
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -265,7 +265,7 @@ export default {
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
                         const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
-                        commentArray.push(res.data)
+                        commentArray.push(res.data.results)
                     }
                     // window.console.log(commentArray)
                     return commentArray
@@ -311,10 +311,11 @@ export default {
         async newProcess() {
             try {
                     const that = this
+                    const process_kind = this.engineer_info.Title + 5
                     const res = await this.$http.post(
                     'http://localhost:8000/escBackend/process/',
                         {
-                            Kind: that.engineer_info.Title,
+                            Kind: process_kind,
                             ProcessOwner: that.engineer_info.id,
                             ProcessCurrentStage: 1,
                             Stage1TryTimes: 1,
@@ -323,9 +324,9 @@ export default {
                             Stage4TryTimes: -1
                         },
                     );
-                    window.console.log(res.data)
+                    window.console.log(res.data.results)
                     const path = 'http://localhost:8000/escBackend/engineer/' + that.engineer_info.id + '/'
-                    const processID = res.data.id
+                    const processID = res.data.results.id
                     const res1 = await this.$http.put( path,
                         {
                             "Alias": that.engineer_info.Alias,
@@ -337,7 +338,7 @@ export default {
                         }
                     );
                     // location.reload();
-                    const newPath = '/processDetail/' + res.data.id
+                    const newPath = '/processDetail/' + res.data.results.id
                     setTimeout(() => {
                         this.$router.push(newPath)
                     }, 2000);

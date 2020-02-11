@@ -22,7 +22,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-subheader class="mt-4 grey--text text--darken-1">REVIEWERS</v-subheader>
-        <v-list>
+        <v-list v-if="reviewer_list">
           <v-list-item
             v-for="(item, i) in reviewer_list"
             :key="i"
@@ -34,7 +34,7 @@
                 alt=""
               >
             </v-list-item-avatar>
-            <v-list-item-title v-text="item.Name" />
+            <v-list-item-title v-text="item.Name"/>
           </v-list-item>
         </v-list>
         <v-list-item class="mt-4" link v-show="$store.state.username">
@@ -143,8 +143,8 @@
           async get() {
               try {
                   const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
-                  this.reviewer_cnt = res.data.length
-                  return res.data
+                  this.reviewer_cnt = res.data.results.length
+                  return res.data.results
               }catch(e) {
                   window.console.log(e)
               }
