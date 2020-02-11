@@ -100,7 +100,7 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/stage_kind/`)
-                    this.stage_cnt = res.data.results.length
+                    
                     return res.data.results
                 }catch(e) {
                     window.console.log(e)
@@ -111,11 +111,11 @@ export default {
             async get() {
                 try {
                     const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/${this.process_id}`)
-                    this.currentStage = res.data.results.ProcessCurrentStage
-                    let Stage1TryTimes = res.data.results.Stage1TryTimes
-                    let Stage2TryTimes = res.data.results.Stage2TryTimes
-                    let Stage3TryTimes = res.data.results.Stage3TryTimes
-                    let Stage4TryTimes = res.data.results.Stage4TryTimes
+                    this.currentStage = res.data.ProcessCurrentStage
+                    let Stage1TryTimes = res.data.Stage1TryTimes
+                    let Stage2TryTimes = res.data.Stage2TryTimes
+                    let Stage3TryTimes = res.data.Stage3TryTimes
+                    let Stage4TryTimes = res.data.Stage4TryTimes
 
                     while(Stage1TryTimes && Stage1TryTimes>0) {
                         this.cntStage++
@@ -157,7 +157,7 @@ export default {
                         )
                         Stage4TryTimes--
                     }
-                    return res.data.results
+                    return res.data
                 }catch(e) {
                     window.console.log(e)
                 }
@@ -172,10 +172,10 @@ export default {
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
                         const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
-                        if (res.data.results.Writer == that.$store.state.id) {
+                        if (res.data.Writer == that.$store.state.id) {
                             flag = true
                         }
-                        commentArray.push(res.data.results)
+                        commentArray.push(res.data)
                     }
                     // window.console.log(commentArray)
                     this.madeComment = flag
