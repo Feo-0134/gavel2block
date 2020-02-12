@@ -11,7 +11,7 @@ import PreviousComments from './components/PreviousComments'
 Vue.use(Router)
 
 export default new Router({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
         {
