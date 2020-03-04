@@ -65,7 +65,7 @@
                         align="center"
                         justify="start"
                         >
-                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1 && n.stage === cntStage && !madeComment" color="#E57373" @click="newComment(n.stage)">
+                    <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1 && n.stage === cntStage && !madeComment[n.stage]" color="#E57373" @click="newComment(n.stage)">
                         New comment
                     </v-btn>
                     <v-spacer></v-spacer>
@@ -77,7 +77,7 @@
                     </v-btn>
                 </v-row>
                 <v-card-text>
-                    Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
+                    {{$store.state.role === 'reviewer'}} {{n.stage != 1}}
                 </v-card-text>
             </v-card>
             </v-timeline-item>
@@ -93,7 +93,8 @@ export default {
         cntStage: 0,
         items: [ ],
         currentStage: 0,
-        madeComment: false,
+        madeComment: [0],
+        data_updated: false
     }),
     asyncComputed: {
         stage_list: {
@@ -116,7 +117,7 @@ export default {
                     let Stage2TryTimes = res.data.Stage2TryTimes
                     let Stage3TryTimes = res.data.Stage3TryTimes
                     let Stage4TryTimes = res.data.Stage4TryTimes
-
+                    this.items = []
                     while(Stage1TryTimes && Stage1TryTimes>0) {
                         this.cntStage++
                         this.items.push(
@@ -161,7 +162,8 @@ export default {
                 }catch(e) {
                     window.console.log(e)
                 }
-            }
+            },
+            watch:['data_updated']
         },
         comment_list: {
             async get(){
@@ -169,6 +171,7 @@ export default {
                     const that = this
                     let flag = false
                     let commentArray = []
+                    this.madeComment = []
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
                         const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
@@ -176,18 +179,20 @@ export default {
                             flag = true
                         }
                         commentArray.push(res.data)
+                        this.madeComment.push(flag)
+                        flag = false
                     }
                     // window.console.log(commentArray)
-                    this.madeComment = flag
+                    
                     return commentArray
                 }catch(e) {
                     window.console.log(e)
                 }
-            }
+            },
+            watch:['process_object'],
         },
     },
     computed: {
-        
         process_id: function() {
             let current_id = this.$router.currentRoute.path.split("/")[2]
             // window.console.log(current_id)
@@ -220,6 +225,7 @@ export default {
                         }
                     );
                     // location.reload();
+                    this.data_updated = true
                     return res1.data
             }catch(e) {
                 window.console.log(e);

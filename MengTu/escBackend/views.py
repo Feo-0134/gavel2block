@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 templateProcessId = 2
 templateEngineerId = 1
 templateReviewerId = 1
-templateCommentId = 1
+templateCommentId = 2
 
 
 class EngineerTitleViewSet(viewsets.ModelViewSet):
