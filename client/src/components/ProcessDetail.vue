@@ -14,10 +14,17 @@
                 <span>Tus eu perfecto</span>
             </template>
             <v-card class="elevation-2">
-                <v-card-title class="headline">{{n.title}}</v-card-title>
-                <v-row >
+                <v-row>
+                <v-card-title class="headline ml-5">
+                    {{n.title}}
+                </v-card-title>
+                <v-spacer></v-spacer>
+                <v-btn large elevation="17" class="mt-3 mr-9" color="green" outlined align="center">Pass</v-btn>
+                </v-row>
+                <v-row>
                     <v-card
                         class="mx-10"
+                        color="#303030"
                         tile >
                         <v-app-bar
                         dark
@@ -36,7 +43,6 @@
                         <v-row dense>
                             <v-col cols="12">
                                 <v-card
-                                    color="#385F73"
                                     dark
                                     >
                                     <v-card-title class="headline">Upload Material</v-card-title>
@@ -77,7 +83,7 @@
                     </v-btn>
                 </v-row>
                 <v-card-text>
-                    {{$store.state.role === 'reviewer'}} {{n.stage != 1}}
+                    <!-- {{$store.state.role === 'reviewer'}} {{n.stage != 1}} -->
                 </v-card-text>
             </v-card>
             </v-timeline-item>

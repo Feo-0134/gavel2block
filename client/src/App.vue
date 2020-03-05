@@ -74,7 +74,7 @@
     <v-app-bar
       app
       clipped-left
-      color="red"
+      color="red lighten-1"
       dense
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />

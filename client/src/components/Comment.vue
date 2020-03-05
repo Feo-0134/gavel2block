@@ -2,7 +2,7 @@
     <v-container>
         <v-card
         class="mx-2"
-        color="#AF7A6D"
+        color="#303030"
         dark
         max-width="400"
         >
@@ -27,15 +27,23 @@
                     v-model="comment_object.Context"
             ></v-textarea>
                 </v-col>
+                <v-row 
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"    
+                    align="center"
+                    justify="start">
+                    <v-btn class="ml-7 mb-10" color="green lighten-1" @click=";">
+                        Pass
+                    </v-btn>
+                    <v-btn class="ml-3 mb-10" color="red lighten-2" @click=";">
+                        Fail
+                    </v-btn>    
+                </v-row>
                 <v-row
                     v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"    
                     align="center"
                     justify="end"
                     >
-                    <v-btn class="ma-5" color="#E57373" @click="updateComment">
-                        save
-                    </v-btn>
-                    <v-btn class="ma-5" color="#E57373" @click="submitComment">
+                    <v-btn class="ma-5" outlined color="blue lighten-2" @click="submitComment">
                         submit
                     </v-btn>
                 </v-row>
@@ -78,16 +86,7 @@ export default {
     data: () => ({
     }),
     asyncComputed: {
-        // dada: {
-        //     async get() {
-        //         try {
-        //             const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${this.comment_id}/`)
-        //             return res.data.results
-        //         }catch(e) {
-        //             window.console.log(e)
-        //         }
-        //     }
-        // }
+
     },
     computed: {
     },
