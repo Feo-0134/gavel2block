@@ -93,7 +93,7 @@ export default {
           this.validate ()
           if (this.snackbar === true) {
             const res = await this.$http.post(
-              'http://localhost:8000/escBackend/process/',
+              '/escBackend/process/',
                 {
                   Kind: 1,
                   ProcessOwner: 1,

@@ -19,7 +19,9 @@
                     {{n.title}}
                 </v-card-title>
                 <v-spacer></v-spacer>
-                <v-btn large elevation="17" class="mt-3 mr-9" color="green" outlined align="center">Pass</v-btn>
+                <v-btn v-show="n.state==-1" large elevation="17" class="mt-3 mr-9" color="blue" outlined align="center">Pending</v-btn>
+                <v-btn v-show="n.state==0" large elevation="17" class="mt-3 mr-9" color="red" outlined align="center">Fail</v-btn>
+                <v-btn v-show="n.state==1" large elevation="17" class="mt-3 mr-9" color="green" outlined align="center">Pass</v-btn>
                 </v-row>
                 <v-row>
                     <v-card
@@ -83,7 +85,7 @@
                     </v-btn>
                 </v-row>
                 <v-card-text>
-                    <!-- {{$store.state.role === 'reviewer'}} {{n.stage != 1}} -->
+                    {{n.state}}<!-- {{$store.state.role === 'reviewer'}} {{n.stage != 1}} -->
                 </v-card-text>
             </v-card>
             </v-timeline-item>
@@ -106,7 +108,7 @@ export default {
         stage_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/stage_kind/`)
+                    const res = await this.$http.get(`/escBackend/stage_kind/`)
                     
                     return res.data.results
                 }catch(e) {
@@ -117,7 +119,7 @@ export default {
         process_object: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/${this.process_id}`)
+                    const res = await this.$http.get(`/escBackend/process/${this.process_id}`)
                     this.currentStage = res.data.ProcessCurrentStage
                     let Stage1TryTimes = res.data.Stage1TryTimes
                     let Stage2TryTimes = res.data.Stage2TryTimes
@@ -129,41 +131,55 @@ export default {
                         this.items.push(
                             {
                                 stage: this.cntStage,
-                                title: this.stage_list[0].FullName
+                                title: this.stage_list[0].FullName,
+                                state: 0
                             }
                         )
                         Stage1TryTimes--
                     }
+                    let l = this.items.length
+                    this.items[l - 1].state = 1
                     while(Stage2TryTimes && Stage2TryTimes>0) {
                         this.cntStage++
                         this.items.push(
                             {
                                 stage: this.cntStage,
-                                title: this.stage_list[1].FullName
+                                title: this.stage_list[1].FullName,
+                                state: 0
                             }
                         )
                         Stage2TryTimes--
                     }
+                    l = this.items.length
+                    this.items[l - 1].state = 1
                     while(Stage3TryTimes && Stage3TryTimes>0) {
                         this.cntStage++
                         this.items.push(
                             {
                                 stage: this.cntStage,
-                                title: this.stage_list[2].FullName
+                                title: this.stage_list[2].FullName,
+                                state: 0
                             }
                         )
                         Stage3TryTimes--
                     }
+                    l = this.items.length
+                    this.items[l - 1].state = 1
                     while(Stage4TryTimes && Stage4TryTimes>0) {
                         this.cntStage++
                         this.items.push(
                             {
                                 stage: this.cntStage,
-                                title: this.stage_list[3].FullName
+                                title: this.stage_list[3].FullName,
+                                state: 0
                             }
                         )
                         Stage4TryTimes--
                     }
+                    l = this.items.length
+                    this.items[l - 1].state = 1
+                    l = this.items.length
+                    if(res.data.Finished != true) this.items[l - 1].state = -1
                     return res.data
                 }catch(e) {
                     window.console.log(e)
@@ -180,7 +196,7 @@ export default {
                     this.madeComment = []
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
-                        const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
+                        const res = await this.$http.get(`/escBackend/comment/${that.process_object.ProcessComments[n]}`)
                         if (res.data.Writer == that.$store.state.id) {
                             flag = true
                         }
@@ -213,18 +229,18 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.post(
-                        'http://localhost:8000/escBackend/comment/',
+                        '/escBackend/comment/',
                         {
                             Stage: stage,
                             Writer: that.$store.state.id,
                             Context: 'template context',
-                            Edited: false,
+                            Pass_Fail: -1,
                             Submited: false
                         }
                     );
                     window.console.log(res.data)
                     const res1 = await this.$http.post(
-                        'http://localhost:8000/escBackend/process_comment/',
+                        '/escBackend/process_comment/',
                         {
                             Process: that.process_id,
                             Comment: res.data.id
@@ -260,7 +276,7 @@ export default {
                     )   
                     const that = this
                     const res = await this.$http.put(
-                        'http://localhost:8000/escBackend/process/' + that.process_object.id + '/',
+                        '/escBackend/process/' + that.process_object.id + '/',
                         {
                             Kind: that.process_object.Kind,
                             ProcessOwner: that.process_object.ProcessOwner,

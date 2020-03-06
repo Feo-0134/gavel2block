@@ -171,7 +171,7 @@ export default {
         stage_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/stage_kind/`)
+                    const res = await this.$http.get(`/escBackend/stage_kind/`)
                     this.stage_cnt = res.data.results.length
                     return res.data.results
                 }catch(e) {
@@ -182,7 +182,7 @@ export default {
         reviewer_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                    const res = await this.$http.get(`/escBackend/reviewer/`)
                     return res.data.results
                 }catch(e) {
                     window.console.log(e)
@@ -193,7 +193,7 @@ export default {
             async get() {
                 try {
                     const that = this
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/${that.process_object.ProcessOwner}`)
+                    const res = await this.$http.get(`/escBackend/engineer/${that.process_object.ProcessOwner}`)
                     return res.data.results
                 }catch(e) {
                     window.console.log(e)
@@ -219,7 +219,7 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.post(
-                    'http://localhost:8000/escBackend/process_review/',
+                    '/escBackend/process_review/',
                         {
                             Process: that.process_object.id,
                             Reviewer: that.reviewer_list[that.model].id

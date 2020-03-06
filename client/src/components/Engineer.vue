@@ -213,7 +213,7 @@ export default {
         engineer_title_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://localhost:8000/escBackend/engineer_title/`)
+                    const res = await this.$http.get(`/escBackend/engineer_title/`)
                     this.engineer_title = res.data.results[this.engineer_info.Title - 1].FullName
                     // potential bug here
                     return res.data.results
@@ -225,7 +225,7 @@ export default {
         process_kind_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://localhost:8000/escBackend/process_kind/`)
+                    const res = await this.$http.get(`/escBackend/process_kind/`)
                     this.process_kind = res.data.results[this.engineer_info.Title - 1].FullName
                     return res.data.results
                 }catch(e) {
@@ -236,7 +236,7 @@ export default {
         stage_kind_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://localhost:8000/escBackend/stage_kind/`)
+                    const res = await this.$http.get(`/escBackend/stage_kind/`)
                     this.currentStage = this.engineer_info.EngineerLatestStage
                     this.maxCurrentStage = this.engineer_info.EngineerLatestStage
                     this.stage_kind = res.data.results[this.engineer_info.EngineerLatestStage - 1].FullName
@@ -250,7 +250,7 @@ export default {
         process_object: {
             async get() {
                 try {
-                    const path = 'http://localhost:8000/escBackend/process/' + this.engineer_info.EngineerLatestProcess + '/'
+                    const path = '/escBackend/process/' + this.engineer_info.EngineerLatestProcess + '/'
                     const res = await this.$http.get(path)
                     return res.data.results
                 }catch(e) {
@@ -265,7 +265,7 @@ export default {
                     let commentArray = []
                     // window.console.log(this.process_object.ProcessComments)
                     for (let n=0;n<this.process_object.ProcessComments.length;n++) {
-                        const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/${that.process_object.ProcessComments[n]}`)
+                        const res = await this.$http.get(`/escBackend/comment/${that.process_object.ProcessComments[n]}`)
                         commentArray.push(res.data.results)
                     }
                     // window.console.log(commentArray)
@@ -314,7 +314,7 @@ export default {
                     const that = this
                     const process_kind = this.engineer_info.Title + 5
                     const res = await this.$http.post(
-                    'http://localhost:8000/escBackend/process/',
+                    '/escBackend/process/',
                         {
                             Kind: process_kind,
                             ProcessOwner: that.engineer_info.id,
@@ -325,7 +325,7 @@ export default {
                             Stage4TryTimes: -1
                         },
                     );
-                    const path = 'http://localhost:8000/escBackend/engineer/' + that.engineer_info.id + '/'
+                    const path = '/escBackend/engineer/' + that.engineer_info.id + '/'
                     const processID = res.data.id
                     const res1 = await this.$http.put( path,
                         {

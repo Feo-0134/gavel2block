@@ -95,12 +95,12 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.put(
-                        'http://localhost:8000/escBackend/comment/'+this.comment_object.id + '/',
+                        '/escBackend/comment/'+this.comment_object.id + '/',
                         {
                             Stage: 1,
                             Writer: 1,
                             Context: that.comment_object.Context,
-                            Edited: true,
+                            Pass_Fail: -1,
                             Submited: false
                         }
                     );
@@ -115,12 +115,12 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.put(
-                        'http://localhost:8000/escBackend/comment/'+this.comment_object.id + '/',
+                        '/escBackend/comment/'+this.comment_object.id + '/',
                         {
                             Stage: 1,
                             Writer: 1,
                             Context: that.comment_object.Context,
-                            Edited: true,
+                            Pass_Fail: -1,
                             Submited: true
                         }
                     );

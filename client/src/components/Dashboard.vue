@@ -89,7 +89,7 @@ export default {
         engineer_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/engineer/`)
+                    const res = await this.$http.get(`/escBackend/engineer/`)
                     this.engineer_cnt = res.data.results.length
                     return res.data.results
                 }catch(e) {
@@ -100,7 +100,7 @@ export default {
         process_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/process/`)
+                    const res = await this.$http.get(`/escBackend/process/`)
                     this.process_cnt = res.data.results.length
                     return res.data.results
                 }catch(e) {
@@ -111,7 +111,7 @@ export default {
         comment_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/comment/`)
+                    const res = await this.$http.get(`/escBackend/comment/`)
                     this.comment_cnt = res.data.results.length
                     return res.data.results
                 }catch(e) {
@@ -122,7 +122,7 @@ export default {
         reviewer_list: {
             async get() {
                 try {
-                    const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                    const res = await this.$http.get(`/escBackend/reviewer/`)
                     this.reviewer_cnt = res.data.results.length
                     return res.data.results
                 }catch(e) {

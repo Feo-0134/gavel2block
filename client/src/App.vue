@@ -142,7 +142,7 @@
       reviewer_list: {
           async get() {
               try {
-                  const res = await this.$http.get(`http://127.0.0.1:8000/escBackend/reviewer/`)
+                  const res = await this.$http.get(`/escBackend/reviewer/`)
                   this.reviewer_cnt = res.data.results.length
                   return res.data.results
               }catch(e) {

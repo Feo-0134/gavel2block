@@ -30,7 +30,7 @@ class ReviewerSerializer(serializers.ModelSerializer):
 class ProcessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Process
-        fields = ['id', 'Kind', 'ProcessOwner', 'ProcessReviewer','ProcessComments', 'ProcessCurrentStage', 'Stage1TryTimes', 'Stage2TryTimes', 'Stage3TryTimes', 'Stage4TryTimes']
+        fields = ['id', 'Kind', 'ProcessOwner', 'ProcessReviewer','ProcessComments', 'ProcessCurrentStage', 'Stage1TryTimes', 'Stage2TryTimes', 'Stage3TryTimes', 'Stage4TryTimes', 'Finished']
 
 class ProcessReviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,7 +39,7 @@ class ProcessReviewSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'Stage', 'Writer', 'Context','Edited', 'Submited']
+        fields = ['id', 'Stage', 'Writer', 'Context','Pass_Fail', 'Submited']
 class ProcessCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessComments
