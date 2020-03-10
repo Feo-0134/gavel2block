@@ -17,7 +17,7 @@
             </v-card-title>
 
             <v-card-text class="headline font-weight-bold">
-            {{comment_object}}
+            <!-- {{comment_object}} -->
             <v-col cols="12" md="10">
                 <v-textarea
                     v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"
@@ -26,15 +26,23 @@
                     label="Text Area"
                     v-model="comment_object.Context"
             ></v-textarea>
+                            <v-textarea
+                    v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && comment_object.Submited"
+                    outlined
+                    name="input-7-4"
+                    label="Text Area"
+                    v-model="comment_object.Context"
+            ></v-textarea>
+
                 </v-col>
                 <v-row 
                     v-show="$store.state.role === 'reviewer' && $store.state.id === comment_object.Writer && !comment_object.Submited"    
                     align="center"
                     justify="start">
-                    <v-btn class="ml-7 mb-10" color="green lighten-1" @click=";">
+                    <v-btn class="ml-7 mb-10" color="green lighten-1" @click="pass_fail=1">
                         Pass
                     </v-btn>
-                    <v-btn class="ml-3 mb-10" color="red lighten-2" @click=";">
+                    <v-btn class="ml-3 mb-10" color="red lighten-2" @click="pass_fail=0">
                         Fail
                     </v-btn>    
                 </v-row>
@@ -84,6 +92,7 @@ export default {
     },
     components: {},
     data: () => ({
+        pass_fail: -1
     }),
     asyncComputed: {
 
@@ -100,7 +109,7 @@ export default {
                             Stage: 1,
                             Writer: 1,
                             Context: that.comment_object.Context,
-                            Pass_Fail: -1,
+                            Pass_Fail: that.pass_fail,
                             Submited: false
                         }
                     );
@@ -120,7 +129,7 @@ export default {
                             Stage: 1,
                             Writer: 1,
                             Context: that.comment_object.Context,
-                            Pass_Fail: -1,
+                            Pass_Fail: that.pass_fail,
                             Submited: true
                         }
                     );

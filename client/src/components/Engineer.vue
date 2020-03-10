@@ -13,7 +13,7 @@
             </v-list-item-avatar>
             </v-list-item>
             <v-card-text>
-            {{ engineer_info }}<br>
+            <!-- {{ engineer_info }}<br> -->
             
             {{ engineer_title }}
             </v-card-text>

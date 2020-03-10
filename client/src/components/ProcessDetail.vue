@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        {{process_object}}
+        <!-- {{process_object}} -->
         <!-- <Process :process_object= "process_object" /> -->
         <v-timeline dense>
             <v-timeline-item
@@ -76,16 +76,16 @@
                     <v-btn class="ml-10 mt-5" v-show="$store.state.role === 'reviewer' && n.stage != 1 && n.stage === cntStage && !madeComment[n.stage]" color="#E57373" @click="newComment(n.stage)">
                         New comment
                     </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-btn class="mr-3" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('pass')">
+                    <!-- <v-spacer></v-spacer> -->
+                    <!-- <v-btn class="mr-3" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('pass')">
                         Stage pass
                     </v-btn>
                     <v-btn class="mr-10" v-show="$store.state.role === 'admin'" color="primary" @click="enterNewStage('fail')">
                         Stage fail
-                    </v-btn>
+                    </v-btn> -->
                 </v-row>
                 <v-card-text>
-                    {{n.state}}<!-- {{$store.state.role === 'reviewer'}} {{n.stage != 1}} -->
+                    <!-- {{n.state}}{{$store.state.role === 'reviewer'}} {{n.stage != 1}} -->
                 </v-card-text>
             </v-card>
             </v-timeline-item>
@@ -229,7 +229,7 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.post(
-                        '/escBackend/comment/',
+                        `/escBackend/comment/`,
                         {
                             Stage: stage,
                             Writer: that.$store.state.id,
@@ -240,7 +240,7 @@ export default {
                     );
                     window.console.log(res.data)
                     const res1 = await this.$http.post(
-                        '/escBackend/process_comment/',
+                        `/escBackend/process_comment/`,
                         {
                             Process: that.process_id,
                             Comment: res.data.id
