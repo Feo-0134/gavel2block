@@ -3,6 +3,12 @@ module.exports = {
     "vuetify"
   ],
   devServer: {
-    proxy: 'http://localhost:8000'
+    proxy: {
+      '/escBackend': {
+        target: 'http://127.0.0.1:8000/',
+        ws: true,
+        changeOrigin: true,
+      }
+    }
   }
 }

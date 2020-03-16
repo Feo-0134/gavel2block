@@ -3,9 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      clipped
-    >
+      clipped>
       <v-list dense>
+
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -21,7 +21,8 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader class="mt-4 grey--text text--darken-1">REVIEWERS</v-subheader>
+
+        <v-subheader class="mt-4 ml-2 grey--text text--darken-1">SYSTEM ADMIN</v-subheader>
         <v-list v-if="reviewer_list">
           <v-list-item
             v-for="(item, i) in reviewer_list"
@@ -37,37 +38,34 @@
             <v-list-item-title v-text="item.Name"/>
           </v-list-item>
         </v-list>
+
         <v-list-item class="mt-4" link v-show="$store.state.username">
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-account-outline</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Welcome, {{currentUser}}</v-list-item-title>
         </v-list-item>
-        <v-list-item link href="">
-          <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-settings</v-icon>
-          </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Management</v-list-item-title>
-        </v-list-item>
-        <v-list-item link @click="$store.commit('switch2Admin')">
-          <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-cctv</v-icon>
-          </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Admin View</v-list-item-title>
-        </v-list-item>
-        <v-list-item link >
-          <v-list-item-action @click="$store.commit('switch2Reviewer')">
-            <v-switch v-model="reviewer" label="" ></v-switch>
-          </v-list-item-action>
-          <v-list-item-title class="grey--text text--darken-1">Reviewer View</v-list-item-title>
-        </v-list-item>
-        <v-list-item link href="http://localhost:8080/" v-show="$store.state.username">
+        <v-list-item link href="/" v-show="$store.state.username">
           <v-list-item-action>
             <v-icon color="grey darken-1">mdi-logout</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1">Log Out</v-list-item-title>
         </v-list-item>
         
+        <v-subheader class="mt-4 ml-2 grey--text text--darken-1">SYSTEM ACCESS</v-subheader>
+        <!-- access control -->
+        <v-list-item link >
+          <v-list-item-action @click="$store.commit('switch2Reviewer')">
+            <v-switch v-model="reviewer" label="" ></v-switch>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Reviewer Access</v-list-item-title>
+        </v-list-item>
+        <v-list-item link >
+          <v-list-item-action @click="$store.commit('switch2Admin')">
+            <v-switch v-model="admin" label="" ></v-switch>
+          </v-list-item-action>
+          <v-list-item-title class="grey--text text--darken-1">Admin Access</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -75,13 +73,13 @@
       app
       clipped-left
       color="red lighten-1"
-      dense
-    >
+      dense>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-icon class="mx-4">fab fa-youtube</v-icon>
+      <v-icon class="ml-10 mr-2">mdi-gavel</v-icon>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">Escalation Assistant</span>
+        <span class="title">Gavel2Block</span>
       </v-toolbar-title>
+
       <v-spacer />
       <v-row
         align="center"
@@ -117,29 +115,25 @@
     props: {
       source: String,
     },
+
     data: () => ({
       drawer: null,
       reviewer: false,
+      admin: false,
       items: [
-        { icon: 'mdi-format-list-bulleted-square', text: 'DashBoard', routeName: 'Dashboard' },
-        // { icon: 'mdi-signal-variant', text: 'Subscriptions', routeName: 'Dashboard' },
+        { icon: 'mdi-home', text: 'Homepage', routeName: 'Dashboard' },
         { icon: 'mdi-email', text: 'E-mail', routeName: 'Dashboard' },
         { icon: 'mdi-account-multiple-outline', text: 'Create Meeting', routeName: 'Dashboard' },
         { icon: 'mdi-history', text: 'Previous Comments', routeName: 'PreviousComments' },
       ],
-      items2: [
-        { picture: 28, text: 'Joseph' },
-        { picture: 38, text: 'Apple' },
-        { picture: 48, text: 'Xbox Ahoy' },
-        { picture: 58, text: 'Nokia' },
-        { picture: 78, text: 'MKBHD' },
-      ],
     }),
+
     created () {
       this.$vuetify.theme.dark = true
     },
+
     asyncComputed: {
-      reviewer_list: {
+      reviewer_list: { // update to get admin list later
           async get() {
               try {
                   const res = await this.$http.get(`/escBackend/reviewer/`)

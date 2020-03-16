@@ -229,7 +229,7 @@ export default {
             try {
                     const that = this
                     const res = await this.$http.post(
-                        `/escBackend/comment/`,
+                        '/escBackend/comment/',
                         {
                             Stage: stage,
                             Writer: that.$store.state.id,
@@ -240,7 +240,7 @@ export default {
                     );
                     window.console.log(res.data)
                     const res1 = await this.$http.post(
-                        `/escBackend/process_comment/`,
+                        '/escBackend/process_comment/',
                         {
                             Process: that.process_id,
                             Comment: res.data.id
